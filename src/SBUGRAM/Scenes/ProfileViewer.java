@@ -121,6 +121,7 @@ public class ProfileViewer  extends Viewer{
             block.setOnAction(actionEvent -> {
                 Viewer.getUser().Block(user.getUserName());
                 refresh();
+                back();
             });
 
             mute.setText("Mute");
@@ -130,10 +131,13 @@ public class ProfileViewer  extends Viewer{
             });
 
             chat.setText("Chat");
-            chat.setOnAction(actionEvent -> {
-                refresh();
-                new Chat(stage, this, user).show();
-            });
+            chat.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
+            if (!Viewer.getUser().isBlock.contains(this.user.getUserName())){
+                chat.setOnAction(actionEvent -> {
+                    refresh();
+                    new Chat(stage, this, user).show();
+                });
+            }
         }
         if (followRequest == null) {
             options.getItems().addAll(block, mute, chat);
@@ -146,7 +150,7 @@ public class ProfileViewer  extends Viewer{
 
 
         ImageView imageView = new ImageView();
-        if (user.getImage() != null) {
+        if (user.getImage() != null && !Viewer.getUser().isBlock.contains(this.user.getUserName())) {
             image = Tools.byteToImage(user.getImage());
             imageView.setImage(image);
         } else {
@@ -267,11 +271,12 @@ public class ProfileViewer  extends Viewer{
         posts.setAlignment(Pos.CENTER);
         if (user.getPosts().size() != 0) {
             List<Pane> panes = this.user.getPosts().stream()
-                    .filter(post -> !Viewer.getUser().isMute.contains(post.getUser()))
+                    .filter(post -> !Viewer.getUser().isMute.contains(post.getUser()) && !Viewer.getUser().isBlock.contains(post.getUser()))
                     .map(post -> new PostViewer(stage, this, post).getMadePane())
                     .collect(Collectors.toList());
             if (user.getReposts() != null) {
                 panes.addAll(this.user.getReposts().stream()
+                        .filter(repost -> !Viewer.getUser().isMute.contains(repost.post.getUser()) && !Viewer.getUser().isBlock.contains(repost.post.getUser()))
                         .map(rePost -> rePost.getPost(Viewer.getServer()))
                         .map(post -> new PostViewer(stage, this, post).getMadePane())
                         .collect(Collectors.toList()));
@@ -279,6 +284,7 @@ public class ProfileViewer  extends Viewer{
             posts.getChildren().addAll(panes);
         } else if (user.getReposts().size() != 0) {
             List<Pane> panes = this.user.getReposts().stream()
+                    .filter(repost -> !Viewer.getUser().isMute.contains(repost.post.getUser()) && !Viewer.getUser().isBlock.contains(repost.post.getUser()))
                     .map(rePost -> rePost.getPost(Viewer.getServer()))
                     .map(post -> new PostViewer(stage, this, post).getMadePane())
                     .collect(Collectors.toList());

@@ -34,6 +34,8 @@ public class Following extends Handler{
         handle(server.allUsers.get(getUser()));
         if (getAddOrRemove() == AddOrRemove.ADD) {
             server.allUsers.get(((String) getObjects().get(0))).answerToFollowerRequest(getUser(), (boolean) getObjects().get(1));
+        } else {
+            server.allUsers.get((String) getObjects().get(0)).unFollowing(getUser());
         }
     }
 }

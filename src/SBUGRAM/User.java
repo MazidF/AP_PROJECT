@@ -197,6 +197,9 @@ public class User extends Thread implements Serializable{
         Block blockOut = new Block(userName, this.getUserName());
         blockOut.setAddOrRemove(AddOrRemove.ADD);
         Outer(blockOut);
+        Following followingOUt = new Following(userName, this.getUserName());
+        followingOUt.setAddOrRemove(AddOrRemove.REMOVE);
+        Outer(followingOUt);
     }
 
     public void unBlock(String userName) {

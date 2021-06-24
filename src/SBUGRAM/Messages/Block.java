@@ -22,5 +22,11 @@ public class Block extends Handler{
     @Override
     public void handle(Server server) {
         handle(server.allUsers.get(getUser()));
+        if (getAddOrRemove() == AddOrRemove.ADD) {
+            server.allUsers.get((String) getObjects().get(0)).block((String) getObjects().get(0));
+        }
+        else {
+            server.allUsers.get((String) getObjects().get(0)).unBlock((String) getObjects().get(0));
+        }
     }
 }

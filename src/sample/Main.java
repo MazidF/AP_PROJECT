@@ -446,8 +446,8 @@ public class Main extends Application {
                 Text errorText = new Text();
 //                errorText.setFill(Color.RED);
                 HBox errorBox = new HBox();
-                if (e instanceof SameUserException) {
-                    error(userName);
+                if (e instanceof SameUserNameException) {
+                    userName.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
                 } else {
                     if (!username.equals("")) {
                         repair(userName);

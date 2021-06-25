@@ -189,9 +189,11 @@ public class User extends Thread implements Serializable{
     }
 
     public void block(String userName) {
-        if (userName.equals(this.userName)) return;
-        isBlock.add(userName);
+        if (!userName.equals(this.userName)) {
+            isBlock.add(userName);
+        }
     }
+
     public void Block(String userName) {
         block(userName);
         Block blockOut = new Block(userName, this.getUserName());

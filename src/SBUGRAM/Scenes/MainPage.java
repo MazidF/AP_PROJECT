@@ -50,7 +50,7 @@ public class MainPage extends Viewer {
         followings.setAlignment(Pos.CENTER);
         if (user.getFollowing().size() != 0) {
             List<Pane> panes = user.getFollowing().stream()
-                    .filter(following -> !Viewer.getUser().isBlock.contains(following))
+                    .filter(following -> !Viewer.getUser().isMute.contains(following))
                     .map(following -> new ProfileLabel(stage, this, server.allUsers.get(following)).getMadePane())
                     .collect(Collectors.toList());
             followings.getChildren().addAll(panes);

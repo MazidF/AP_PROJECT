@@ -304,10 +304,11 @@ public class Server implements Callable<Server>, Serializable {
                 }
                 if (socketServer.allUsers.containsKey(message)) {
                     User user = socketServer.allUsers.get(message);
-                    System.out.println(user.follower);
-                    System.out.println(user.following);
-                    System.out.println(user.blockedBy);
-                    System.out.println(user.isMute);
+                    System.out.println("follower: " + user.follower);
+                    System.out.println("following: " + user.following);
+                    System.out.println("blockedBy: " + user.blockedBy);
+                    System.out.println("isBlock: " + user.isBlock);
+                    System.out.println("isMute: " + user.isMute);
                 }
             }
         }

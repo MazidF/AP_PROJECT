@@ -23,10 +23,10 @@ public class Block extends Handler{
     public void handle(Server server) {
         handle(server.allUsers.get(getUser()));
         if (getAddOrRemove() == AddOrRemove.ADD) {
-            server.allUsers.get((String) getObjects().get(0)).block((String) getObjects().get(0));
+            server.allUsers.get((String) getObjects().get(0)).block(getUser());
         }
         else {
-            server.allUsers.get((String) getObjects().get(0)).unBlock((String) getObjects().get(0));
+            server.allUsers.get((String) getObjects().get(0)).unBlock(getUser());
         }
     }
 }

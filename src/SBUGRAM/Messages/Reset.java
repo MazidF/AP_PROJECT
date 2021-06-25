@@ -1,5 +1,7 @@
 package SBUGRAM.Messages;
 
+import SBUGRAM.Comment;
+import SBUGRAM.Post;
 import SBUGRAM.Server;
 import SBUGRAM.Tools;
 import SBUGRAM.User;
@@ -26,11 +28,29 @@ public class Reset extends Handler{
         user.UnMute(getUser());
         user.getChats().remove(getUser());
         user.getFollowRequest().remove(getUser());
+        user.isMute.remove(getUser());
+        user.isBlock.remove(getUser());
+        user.chats.remove(getUser());
+        user.blockedBy.remove(getUser());
+        user.followRequest.remove(getUser());
+        user.follower.remove(getUser());
+        user.following.remove(getUser());
+        user.reposts.removeAll(user.reposts.stream()
+                .filter(rePost -> rePost.post.getUser().equals(getUser()))
+                .collect(Collectors.toList()));
+        for (Post post : user.posts) {
+            List<Comment> comments = post.getComments();
+            for (Comment comment : comments) {
+                if (comment.getUser().equals(getUser())) {
+                    post.UnComment(comment);
+                }
+            }
+        }
     }
 
     @Override
     public void handle(Server server) {
-        synchronized (server.allUsers){
+        synchronized (server){
             server.allUsers.remove(getUser());
         }
         server.allUsers.keySet().stream()

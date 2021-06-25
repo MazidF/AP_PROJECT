@@ -54,7 +54,9 @@ public class Chat extends Viewer {
         backBox.setAlignment(Pos.CENTER_LEFT);
         Button back = new Button("back");
         back.setOnAction(actionEvent -> {
-            this.timeline.stop();
+            if (this.timeline != null){
+                this.timeline.stop();
+            }
             this.timeline = null;
             back();
             System.gc();

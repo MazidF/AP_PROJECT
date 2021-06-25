@@ -50,7 +50,7 @@ public class MainPage extends Viewer {
         followings.setAlignment(Pos.CENTER);
         if (user.getFollowing().size() != 0) {
             List<Pane> panes = user.getFollowing().stream()
-                    .filter(following -> !Viewer.getUser().isMute.contains(following))
+                    .filter(following -> !Viewer.getUser().isBlock.contains(following))
                     .map(following -> new ProfileLabel(stage, this, server.allUsers.get(following)).getMadePane())
                     .collect(Collectors.toList());
             followings.getChildren().addAll(panes);
@@ -66,8 +66,9 @@ public class MainPage extends Viewer {
 
         List<Post> postList = server.allUsers.keySet().stream()
                 .filter(key -> user.getFollowing().contains(key))
-                .filter(key -> !user.getIsBlock().contains(key))
-                .filter(key -> !server.allUsers.get(key).getIsBlock().contains(user.getUserName()))
+                .filter(key -> !user.isBlock.contains(key))
+                .filter(key -> !server.allUsers.get(key).isBlock.contains(user.getUserName()))
+                .filter(key -> !server.allUsers.get(key).isMute.contains(user.getUserName()))
                 .map(key -> server.allUsers.get(key))
                 .flatMap(user1 -> user1.getPosts().stream())
                 .collect(Collectors.toList());

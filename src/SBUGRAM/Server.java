@@ -4,6 +4,14 @@ import SBUGRAM.Exceptions.PasswordException;
 import SBUGRAM.Exceptions.SameUserNameException;
 import SBUGRAM.Exceptions.UserNameNotFound;
 import SBUGRAM.Messages.*;
+import SBUGRAM.Scenes.ProfileLabel;
+import SBUGRAM.Scenes.Viewer;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -23,7 +31,8 @@ public class Server implements Callable<Server>, Serializable {
     @Serial
     private static final long serialVersionUID = 7529685098267757690L;
 
-    public final int PORT = 8765;
+//    public final int PORT = 8765;
+    public final int PORT = 4200;
     public final String SOURCE_PATH = "C:\\Users\\vcc\\IdeaProjects\\first fx\\src\\SOURCE\\SBUGRAM_SOURCE.text";
     public final AtomicInteger userID = new AtomicInteger(0);
     public Boolean hasMade = false;
@@ -300,7 +309,7 @@ public class Server implements Callable<Server>, Serializable {
                     break;
                 }
                 if (message.equals("users")) {
-                    System.out.println(socketServer.allUsers.keySet());
+                    System.out.println(socketServer.allUsers.keySet() + "\n");
                 }
                 if (socketServer.allUsers.containsKey(message)) {
                     User user = socketServer.allUsers.get(message);
@@ -308,7 +317,7 @@ public class Server implements Callable<Server>, Serializable {
                     System.out.println("following: " + user.following);
                     System.out.println("blockedBy: " + user.blockedBy);
                     System.out.println("isBlock: " + user.isBlock);
-                    System.out.println("isMute: " + user.isMute);
+                    System.out.println("isMute: " + user.isMute + "\n");
                 }
             }
         }

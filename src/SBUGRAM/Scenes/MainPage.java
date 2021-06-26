@@ -67,11 +67,23 @@ public class MainPage extends Viewer {
         List<Post> postList = server.allUsers.keySet().stream()
                 .filter(key -> user.getFollowing().contains(key))
                 .filter(key -> !user.isBlock.contains(key))
+                .filter(key -> !user.isMute.contains(key))
                 .filter(key -> !server.allUsers.get(key).isBlock.contains(user.getUserName()))
-                .filter(key -> !server.allUsers.get(key).isMute.contains(user.getUserName()))
                 .map(key -> server.allUsers.get(key))
                 .flatMap(user1 -> user1.getPosts().stream())
                 .collect(Collectors.toList());
+
+        postList.addAll(server.allUsers.keySet().stream()
+                .filter(key -> user.getFollowing().contains(key))
+                .filter(key -> !user.isBlock.contains(key))
+                .filter(key -> !user.isMute.contains(key))
+                .filter(key -> !server.allUsers.get(key).isBlock.contains(user.getUserName()))
+                .map(key -> server.allUsers.get(key))
+                .flatMap(user1 -> user1.getReposts().stream())
+                .map(rePost -> rePost.getPost(getServer()))
+                .collect(Collectors.toList()));
+
+
 
         postList = postList.stream().sorted(Post::compareTo).collect(Collectors.toList());
 

@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 public class MuteViewer extends Viewer {
     public User user;
 
-    public MuteViewer(Stage stage, Viewer lastViewer, Object... objects) {
-        super(stage, lastViewer, objects);
+    public MuteViewer(Stage stage, Viewer lastViewer, User user) {
+        super(stage, lastViewer, user);
         this.user = user;
         Scene s = getLastScene();
         initialization(stage, s.getWidth(), s.getHeight());
@@ -45,6 +45,7 @@ public class MuteViewer extends Viewer {
         unBlock.setOnAction(actionEvent -> {
             Viewer.getUser().UnMute(user.getUserName());
             refresh();
+            back();
         });
         buttons.getChildren().addAll(userName, unBlock);
 

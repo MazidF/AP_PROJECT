@@ -1,22 +1,24 @@
 package SBUGRAM.Scenes;
 
-import SBUGRAM.Comment;
-import SBUGRAM.Post;
-import SBUGRAM.User;
+import SBUGRAM.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 public class PostMaker extends Viewer{
@@ -66,6 +68,85 @@ public class PostMaker extends Viewer{
         postText.setWrapText(true);
         postText.setPrefSize(330, 200);
 
+        Button addImage = new Button("add image");
+
+        final Image[] imageUser = {null};
+        final String[] filePath = {null};
+
+        addImage.setOnAction(actionEvent -> {
+            Stage newStage = new Stage();
+            newStage.setWidth(stage.getWidth());
+            newStage.setHeight(stage.getHeight());
+
+            GridPane innerGridPane = new GridPane();
+            innerGridPane.setAlignment(Pos.CENTER);
+
+            final Image[] image = new Image[1];
+            image[0] = null;
+
+            ImageView imageView = new ImageView();
+            try {
+                imageView.setImage(new Image(new FileInputStream("C:\\Users\\vcc\\IdeaProjects\\first fx\\src\\SOURCE\\profileImage.png")));
+            } catch (FileNotFoundException e) {
+                imageView.setVisible(false);
+                imageView.setManaged(false);
+            }
+
+            Button add = new Button("add");
+            add.setOnAction(actionEvent1 -> {
+                try {
+                    FileChooser chooser = new FileChooser();
+                    File file = chooser.showOpenDialog(newStage);
+                    filePath[0] = file.getAbsolutePath();
+                    image[0] = new Image(new FileInputStream(filePath[0]));
+                    imageView.setImage(image[0]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    image[0] = null;
+                    //TODO add error part
+                }
+                newStage.show();
+            });
+            Button delete = new Button("delete");
+            delete.setOnAction(actionEvent1 -> {
+                try {
+                    imageView.setImage(new Image(new FileInputStream("C:\\Users\\vcc\\IdeaProjects\\first fx\\src\\SOURCE\\profileImage.png")));
+                } catch (FileNotFoundException e) {
+                    imageView.setVisible(false);
+                    imageView.setManaged(false);
+                }
+                newStage.show();
+            });
+            VBox buttons = new VBox(10);
+            buttons.getChildren().addAll(add, delete);
+            HBox imagePathBox = new HBox(10);
+            imagePathBox.setAlignment(Pos.CENTER);
+
+            imageView.setFitHeight(200);
+            imageView.setFitWidth(200);
+            imageView.maxHeight(200);
+            imageView.maxWidth(200);
+
+            imagePathBox.getChildren().addAll(imageView, buttons);
+
+
+            Button done = new Button("done");
+            done.setOnAction(actionEvent1 -> {
+                imageUser[0] = image[0];
+                newStage.close();
+            });
+
+            VBox allInner = new VBox(15);
+            allInner.getChildren().addAll(imagePathBox, new Label(),done);
+            allInner.setAlignment(Pos.CENTER);
+
+            innerGridPane.getChildren().add(allInner);
+            newStage.setScene(new Scene(innerGridPane, stage.getScene().getWidth(), stage.getScene().getHeight()));
+            newStage.show();
+        });
+
+
+
 
         HBox buttons = new HBox(10);
         Button cancel = new Button("cancel");
@@ -77,13 +158,17 @@ public class PostMaker extends Viewer{
         send.setOnAction(r -> {
             String POST = postText.getText();
             String TITLE = titleText.getText();
-            user.Post(new Post(user.getUserName(), POST, TITLE));
+            Post post = new Post(user.getUserName(), POST, TITLE);
+            if (imageUser[0] != null) {
+                post.setImage(Tools.imageToByte(imageUser[0]));
+            }
+            user.Post(post);
             getLastViewer().refresh();
             back();
         });
 
 
-        buttons.getChildren().addAll(cancel, send);
+        buttons.getChildren().addAll(cancel, addImage, send);
         buttons.setAlignment(Pos.CENTER_LEFT);
 
         texts.getChildren().addAll(userNameText, titleText, postText, buttons);

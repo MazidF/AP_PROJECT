@@ -152,6 +152,7 @@ public class Main extends Application {
 
         Button logInButton = new Button("login");
         logInButton.setOnAction(a -> {
+            passwordViewer.fire();
             String username = userNameTextField.getText();
             String password_ = passwordTextField.getText();
             try {

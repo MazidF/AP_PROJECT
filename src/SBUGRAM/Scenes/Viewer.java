@@ -88,8 +88,23 @@ public class Viewer extends Node implements Serializable {
             this.lastViewer.refresh();
             viewerLinkedList.pop();
         }
-        if (this instanceof OnlineChat) {
-
+        if (this instanceof BlockedList) {
+            try {
+                ((BlockedList) this).users = new ArrayList<>(Viewer.getServer().allUsers.get(((BlockedList) this).user.getUserName()).getIsBlock());
+                if (((BlockedList) this).users == null) throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.back();
+            }
+        }
+        if (this instanceof MutedList) {
+            try {
+                ((MutedList) this).users = new ArrayList<>(Viewer.getServer().allUsers.get(((MutedList) this).user.getUserName()).getIsBlock());
+                if (((MutedList) this).users == null) throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.back();
+            }
         }
         if (this instanceof Chat) {
             try {

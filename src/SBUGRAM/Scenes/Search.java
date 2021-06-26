@@ -111,7 +111,7 @@ public class Search extends Viewer{
             }
 
         });
-        searchBox.getChildren().addAll(searchArea, searchButton);
+        searchBox.getChildren().addAll(searchArea, searchButton, allUsersBox);
 
 
 

@@ -46,6 +46,7 @@ public class BlockViewer extends Viewer {
         unBlock.setOnAction(actionEvent -> {
             Viewer.getUser().UnBlock(user.getUserName());
             refresh();
+            back();
         });
         buttons.getChildren().addAll(userName, unBlock);
 

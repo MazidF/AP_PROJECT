@@ -1,5 +1,6 @@
 package SBUGRAM.Scenes;
 
+import SBUGRAM.Messages.Reset;
 import SBUGRAM.Tools;
 import SBUGRAM.User;
 import javafx.geometry.Insets;
@@ -70,11 +71,25 @@ public class ProfileViewer  extends Viewer{
         MenuItem followRequest = null;
         MenuItem logOUt = null;
         MenuItem setting = null;
+        MenuItem deleteAccount = null;
 
         if (user.getUserName().equals(Viewer.getUser().getUserName())) {
             followRequest = new CheckMenuItem("Follow Requests");
             logOUt = new CheckMenuItem("Log OUt");
             setting = new CheckMenuItem("Setting");
+            deleteAccount = new CheckMenuItem("delete account");
+
+            deleteAccount.setOnAction(actionEvent -> {
+                Reset reset = new Reset(Viewer.getUser().getUserName());
+                Viewer.getUser().Outer(reset);
+                Viewer.getUser().saveAndExit();
+                Tools.sleep(100);
+                try {
+                    getMain().reStart(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
             followRequest.setText("Follow Requests");
             followRequest.setOnAction(actionEvent -> {
@@ -99,14 +114,12 @@ public class ProfileViewer  extends Viewer{
 
             block.setText("Blocked List");
             block.setOnAction(actionEvent -> {
-                List<String> users = new ArrayList<>(user.getIsBlock());
-                new BlockedList(stage, this, users).show();
+                new BlockedList(stage, this, user).show();
             });
 
             mute.setText("Muted List");
             mute.setOnAction(actionEvent -> {
-                List<String> users = new ArrayList<>(user.getIsMute());
-                new MutedList(stage, this, users).show();
+                new MutedList(stage, this, user).show();
             });
 
             chat.setText("Chat List");
@@ -118,28 +131,34 @@ public class ProfileViewer  extends Viewer{
         } else {
 
             block.setText("Block");
-            block.setOnAction(actionEvent -> {
-                if (!Viewer.getUser().isBlock.contains(user.getUserName())) {
+            if (!Viewer.getUser().isBlock.contains(user.getUserName())) {
+                block.setOnAction(actionEvent -> {
                     Viewer.getUser().Block(user.getUserName());
                     refresh();
                     back();
-                } else {
-                    block.setStyle("-fx-text-fill: green; -fx-font-size: 12px;");
+                });
+            } else {
+                block.setStyle("-fx-text-fill: green; -fx-font-size: 12px;");
+                block.setOnAction(actionEvent -> {
                     Viewer.getUser().UnBlock(user.getUserName());
                     refresh();
-                }
-            });
+                });
+            }
 
             mute.setText("Mute");
-            mute.setOnAction(actionEvent -> {
                 if (!Viewer.getUser().isMute.contains(user.getUserName())) {
-                    Viewer.getUser().Mute(user.getUserName());
+                    mute.setOnAction(actionEvent -> {
+                        Viewer.getUser().Mute(user.getUserName());
+                        refresh();
+                    });
                 } else {
                     mute.setStyle("-fx-text-fill: green; -fx-font-size: 12px;");
-                    Viewer.getUser().UnMute(user.getUserName());
+                    mute.setOnAction(actionEvent -> {
+                        Viewer.getUser().UnMute(user.getUserName());
+                        refresh();
+                    });
                 }
-                refresh();
-            });
+
 
             chat.setText("Chat");
             if (!Viewer.getUser().isBlock.contains(this.user.getUserName())){
@@ -154,7 +173,7 @@ public class ProfileViewer  extends Viewer{
         if (followRequest == null) {
             options.getItems().addAll(block, mute, chat);
         } else {
-            options.getItems().addAll(block, mute, chat, followRequest, logOUt, setting);
+            options.getItems().addAll(block, mute, chat, followRequest, logOUt, setting, deleteAccount);
         }
 
         userBox.getChildren().addAll(userName, options);

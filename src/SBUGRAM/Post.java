@@ -17,11 +17,15 @@ import java.util.stream.Collectors;
 
 public class Post extends Comment {
 
-    private Image image;
+    private byte[] image = null;
     private final String title;
     private ConcurrentSkipListSet<String> like = new ConcurrentSkipListSet<>();
     private final Vector<String> repost = new Vector<>();
     private final Vector<Comment> comments = new Vector<>();
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public Post(String userName, String message, String title) {
         super(userName, message);
@@ -66,7 +70,7 @@ public class Post extends Comment {
         }
     }
 
-    public Image getImage() {
+    public byte[] getImage() {
         return image;
     }
 
@@ -131,7 +135,7 @@ public class Post extends Comment {
     @Override
     public String toString() {
         //Todo you should make it better name or username for example
-        return getUser() + ":(" + title + ")\n\t" + getMessage();
+        return getUser() + "-> (" + title + ")\n\t" + getMessage() + "\n";
     }
 
     public void check() {

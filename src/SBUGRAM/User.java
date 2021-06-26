@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 public class User extends Thread implements Serializable{
     @Serial
     private static final long serialVersionUID = 6529685098267757690L;
-    public final static int PORT = 8765;
+//    public final static int PORT = 8765;
+    public final static int PORT = 4200;
     public final static String HOST = "localhost";
 
 
@@ -361,6 +362,7 @@ public class User extends Thread implements Serializable{
 
 
     public void RePost(Post post) {
+        if (post.getUser().equals(this.userName)) return;
         addRePost(post);
         SBUGRAM.Messages.Repost repostOut = new SBUGRAM.Messages.Repost(getUserName(), post);
         repostOut.setAddOrRemove(AddOrRemove.ADD);
@@ -665,6 +667,7 @@ public class User extends Thread implements Serializable{
             this.outputStream.reset();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(new DATE());
             System.exit(-987645);
         }
     }
@@ -712,6 +715,7 @@ public class User extends Thread implements Serializable{
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                System.out.println(new DATE());
                 break;
             }
         }

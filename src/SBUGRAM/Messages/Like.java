@@ -25,4 +25,14 @@ public class Like extends Handler{
     public void handle(Server server) {
         handle(server.allUsers.get(getUser()));
     }
+
+
+    public String toString() {
+        return "like{" +
+                "user: " + (getObjects().get(1)) +
+                ", target: " + this.getUser() +
+                ", for post: " + ((SBUGRAM.Post) this.getObjects().get(0)).getTitle() +
+                (this.getAddOrRemove() != null ? (", kind: " + getAddOrRemove()) : "") +
+                "}\n";
+    }
 }

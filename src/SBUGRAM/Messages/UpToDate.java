@@ -40,6 +40,11 @@ public class UpToDate extends Handler {
 
     @Override
     public String toString() {
-        return "UpToDate ".concat(super.toString());
+        return "upToDate" + "{" +
+                "user: " + getUser() +
+                (this.getAddOrRemove() != null ? (", kind: " + this.getAddOrRemove()) : "") +
+                "}\n";
     }
+
+
 }

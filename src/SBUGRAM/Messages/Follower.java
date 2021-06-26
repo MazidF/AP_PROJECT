@@ -31,4 +31,10 @@ public class Follower extends Handler{
         handle(server.allUsers.get(getUser()));
 //        Tools.Outer(Tools.getOutStream(server, getUser()), this);
     }
+
+
+    @Override
+    public String toString() {
+        return "follower".concat(super.toString());
+    }
 }

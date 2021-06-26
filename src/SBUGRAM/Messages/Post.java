@@ -34,4 +34,14 @@ public class Post extends Handler{
             post.getRepost().forEach(s -> server.allUsers.get(s).removeRePost(post));
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "post{" +
+                "user: " + this.getUser() +
+                ", for post: " + ((SBUGRAM.Post) this.getObjects().get(0)).getTitle() +
+                (this.getAddOrRemove() != null ? (", kind: " + getAddOrRemove()) : "") +
+                "}\n";
+    }
 }

@@ -56,4 +56,14 @@ public class Comment extends Handler {
             Tools.Outer(Tools.getOutStream(server, getUser()), this);
         }*/
     }
+
+    @Override
+    public String toString() {
+        return "comment{" +
+                "user: " + this.getUser() +
+                ", target: " + ((Post) this.getObjects().get(0)).getUser() +
+                ", for post: " + ((Post) this.getObjects().get(0)).getTitle() +
+                (this.getAddOrRemove() != null ? (", kind: " + getAddOrRemove()) : "") +
+                "}\n";
+    }
 }

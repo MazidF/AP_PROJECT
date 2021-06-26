@@ -29,4 +29,9 @@ public class Block extends Handler{
             server.allUsers.get((String) getObjects().get(0)).unBlock(getUser());
         }
     }
+
+    @Override
+    public String toString() {
+        return "block".concat(super.toString());
+    }
 }

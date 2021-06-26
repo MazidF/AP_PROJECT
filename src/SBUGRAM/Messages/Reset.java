@@ -21,13 +21,6 @@ public class Reset extends Handler{
 
     @Override
     public void handle(User user) {
-        user.UnBlockedBy(getUser());
-        user.UnBlock(getUser());
-        user.UnFollower(getUser());
-        user.UnFollowing(getUser());
-        user.UnMute(getUser());
-        user.getChats().remove(getUser());
-        user.getFollowRequest().remove(getUser());
         user.isMute.remove(getUser());
         user.isBlock.remove(getUser());
         user.chats.remove(getUser());

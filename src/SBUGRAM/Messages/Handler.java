@@ -71,15 +71,18 @@ public abstract class Handler implements Serializable {
     public void work(Object object) {
 //        System.out.println(this);
         if (object instanceof User) handle((User) object);
-        else if (object instanceof Server) handle((Server) object);
+        else if (object instanceof Server) {
+            handle((Server) object);
+            System.out.println(this.toString());
+        }
     }
 
     @Override
     public String toString() {
-        return "Handler{" +
-                "objects=" + objects +
-                ", userName='" + userName + '\'' +
-                ", addOrRemove=" + addOrRemove +
-                '}';
+        return "{" +
+                "user: " + userName +
+                ", target: " + objects.get(0) +
+                (this.addOrRemove != null ? (", kind: " + addOrRemove) : "") +
+                "}\n";
     }
 }

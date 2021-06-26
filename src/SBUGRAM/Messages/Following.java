@@ -38,4 +38,10 @@ public class Following extends Handler{
             server.allUsers.get((String) getObjects().get(0)).unFollowing(getUser());
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "following".concat(super.toString());
+    }
 }

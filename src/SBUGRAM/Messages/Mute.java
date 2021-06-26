@@ -23,4 +23,10 @@ public class Mute extends Handler{
     public void handle(Server server) {
         handle(server.allUsers.get(getUser()));
     }
+
+
+    @Override
+    public String toString() {
+        return "mute".concat(super.toString());
+    }
 }

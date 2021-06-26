@@ -106,7 +106,9 @@ public class Forgot extends Viewer {
                 back.setOnAction(actionEvent1 -> {
                     newStage.close();
                 });
-                gridPane1.getChildren().addAll(label, back);
+                VBox box = new VBox(20);
+                box.getChildren().addAll(label, back);
+                gridPane1.getChildren().add(box);
                 newStage.setScene(new Scene(gridPane1, newStage.getScene().getWidth(), newStage.getScene().getHeight()));
                 newStage.show();
             }

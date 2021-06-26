@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -113,8 +114,6 @@ public class PostViewer extends Viewer{
         Label repost = new Label("RePost : ".concat(String.valueOf(repostNumber)));
         if (post.getRepost().contains(Viewer.getUser().getUserName())) {
             repost.setTextFill(Color.RED);
-        } else {
-            //TODO insert to delete reposted post
         }
         repost.setOnMouseClicked(action -> {
             if (!post.getRepost().contains(Viewer.getUser().getUserName())) {
@@ -135,9 +134,22 @@ public class PostViewer extends Viewer{
         commentingButton.getChildren().add(comment);
         commentingButton.setAlignment(Pos.CENTER_RIGHT);
 
+
         VBox all = new VBox(10);
         all.setAlignment(Pos.CENTER);//
-        all.getChildren().addAll(commentingButton, title, message, date);
+
+        if (this.post.getImage() != null) {
+            ImageView imageView = new ImageView();
+            imageView.setImage(Tools.byteToImage(post.getImage()));
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            imageView.maxHeight(150);
+            imageView.maxWidth(150);
+
+            all.getChildren().addAll(commentingButton, imageView, title, message, date);
+        } else {
+            all.getChildren().addAll(commentingButton, title, message, date);
+        }
         gridPane.add(all, 0,1, 3, 5);
 
         setPane(gridPane);

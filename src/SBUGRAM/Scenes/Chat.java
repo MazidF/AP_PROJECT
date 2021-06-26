@@ -136,7 +136,6 @@ public class Chat extends Viewer {
 
         write.textProperty().addListener((observable, oldValue, newValue) -> {
             messageTyping = newValue;
-            System.out.println(messageTyping);
         });
 
 

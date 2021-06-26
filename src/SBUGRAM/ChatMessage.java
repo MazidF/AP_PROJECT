@@ -39,7 +39,8 @@ public class ChatMessage implements Serializable {
                     lines += s.length()/35;
                 }
             }
-            this.textArea = new TextArea(this.message);
+            lines+=2;
+            this.textArea = new TextArea(this.message.concat("\n\n" + this.date));
             this.textArea.setMaxWidth(240);
             this.textArea.setPrefHeight(lines*25);
             this.textArea.setPrefRowCount(1);

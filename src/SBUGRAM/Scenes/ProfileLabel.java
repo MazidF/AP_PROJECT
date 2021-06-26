@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -22,6 +23,9 @@ public class ProfileLabel extends Viewer {
     public void initialization(Stage stage, double x, double y) {
         VBox box = new VBox();
         Button profileButton = new Button();
+        if (getServer().onlineUsers.contains(user.getUserName())) {
+            profileButton.setTextFill(Color.GREEN);
+        }
         profileButton.setText(user.getUserName());
         profileButton.setPrefSize(60, 60);
         profileButton.setOnAction(actionEvent -> new ProfileViewer(stage, getLastViewer(), user).show());

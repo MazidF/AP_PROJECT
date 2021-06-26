@@ -32,4 +32,14 @@ public class Repost extends Handler {
                     .forEach(post -> post.UnRepost(getUser()));
         }
     }
+
+
+    public String toString() {
+        return "repost{" +
+                "user: " + this.getUser() +
+                ", target: " + ((Post) getObjects().get(0)).getUser() +
+                ", for post: " + ((SBUGRAM.Post) this.getObjects().get(0)).getTitle() +
+                (this.getAddOrRemove() != null ? (", kind: " + getAddOrRemove()) : "") +
+                "}\n";
+    }
 }
